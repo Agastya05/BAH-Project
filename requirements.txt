@@ -1,0 +1,12 @@
+scrapy==2.8.0
+spacy==3.5.3
+neo4j==5.8.1
+rasa==3.5.10
+langchain==0.0.184
+geopandas==0.13.2
+fastapi==0.95.2
+uvicorn==0.22.0
+python-dotenv==1.0.0
+beautifulsoup4==4.12.2
+numpy==1.24.3
+pandas==2.0.2
