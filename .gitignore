@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.env
+.env
+.venv/
+venv/
+env/
+*.sqlite3
+*.db
+
+# FastAPI/Uvicorn logs
+*.log
+
+# Rasa
+.rasa/
+.rasa_cache/
+models/
+*.yml.backup
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VSCode
+.vscode/
+.history/
+
+# macOS
+.DS_Store
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+
+# Node/React
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/src/frontend/build/
+/src/frontend/.env
+
+# Coverage
+htmlcov/
+.coverage
+coverage.xml
+.cache
+
+# Neo4j
+data/
+import/
+logs/
+metrics/
+plugins/
+
+# Scrapy
+.scrapy/
+
+# Misc
+*.bak
+*.swp
+*.swo
+*.orig
+.idea/
+*.iml

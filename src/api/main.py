@@ -29,7 +29,7 @@ async def process_query(query: Query):
         intent = rasa_data.get('intent', {}).get('name', '')
         confidence = rasa_data.get('intent', {}).get('confidence', 0)
 
-        # Get answer from knowledge graph if needed
+        # Get answer from knowledge graph if neededdd
         if query.location:
             # Add geospatial processing here
             pass
