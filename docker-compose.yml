@@ -1,42 +1,39 @@
+version: "3.8"
+
 services:
   rasa:
-    platform: linux/amd64
-    build: .
+    image: rasa/rasa:3.5.10-full
+    volumes:
+      - ./src/chatbot:/app
+    command: run --enable-api --cors "*"
     ports:
       - "5005:5005"
-    volumes:
-      - ./src/chatbot:/app/src/chatbot
-    command: rasa run --enable-api
 
-  neo4j:
-    image: neo4j:4.4
-    ports:
-      - "7474:7474"
-      - "7687:7687"
-    environment:
-      - NEO4J_AUTH=neo4j/password
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile # Or src/api/Dockerfile if you have one there
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --app-dir src
     volumes:
-      - ./data/neo4j:/data
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
 
   frontend:
     build:
-      context: .
+      context: ./src/frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
-    volumes:
-      - ./src/frontend:/app/src/frontend
-    depends_on:
-      - api
+      - "3000:80"
+    stdin_open: true
+    tty: true
 
-  api:
-    build: .
-    ports:
-      - "8000:8000"
+  scrapy:
+    build:
+      context: ./src/scrapers
+      dockerfile: Dockerfile
     volumes:
-      - ./src:/app/src
-    depends_on:
-      - neo4j
-      - rasa
-    working_dir: /app/src
-    command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+      - ./src/scrapers:/app
+    command: scrapy crawl mosdac

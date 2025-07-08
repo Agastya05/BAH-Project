@@ -1,5 +1,5 @@
 # Base image with Python and Node.js
-FROM --platform=linux/amd64 python:3.8-slim
+FROM --platform=linux/amd64 python:3.9-slim
 
 # Install Node.js and npm
 RUN apt-get update && apt-get install -y nodejs npm \
@@ -41,4 +41,4 @@ WORKDIR /app
 EXPOSE 3000 5005 7474 7687 8000
 
 # Start services using docker-compose
-CMD ["/bin/bash", "./scripts/start-services.sh"]
+CMD ["scrapy", "crawl", "mosdac"]

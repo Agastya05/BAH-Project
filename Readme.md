@@ -1,113 +1,127 @@
-# AI-based Help Bot Project
+# BAH-Project
 
-## Overview
-
-This project is an AI-based Help Bot that integrates a chatbot powered by Rasa, a knowledge graph, and a frontend interface. It uses FastAPI for the backend API server and Neo4j as the graph database.
-
-## Project Structure
-
-```
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-├── scripts/
-│   └── start-services.sh
-├── src/
-│   ├── api/
-│   │   └── main.py
-│   ├── chatbot/
-│   │   └── config.yml
-│   ├── frontend/
-│   │   ├── package.json
-│   │   └── src/
-│   ├── knowledge_graph/
-│   │   └── graph_processor.py
-│   ├── nlp/
-│   │   └── text_processor.py
-│   └── scrapers/
-│       └── mosdac_spider.py
-└── tests/
-```
-
-## Prerequisites
-
-- Docker and Docker Compose installed
-- Python 3.8+
-
-## Setup and Running
-
-### 1. Start Docker Services
-
-Run the following command to start all services (Rasa, API, Neo4j, Frontend):
-
-```bash
-docker-compose up -d
-```
-
-### 2. Verify Running Containers
-
-Check that all containers are running:
-
-```bash
-docker ps
-```
-
-### 3. Initialize Knowledge Graph
-
-Run the graph processor to initialize the knowledge graph:
-
-```bash
-python src/knowledge_graph/graph_processor.py
-```
-
-### 4. Train Rasa Model
-
-If needed, train the Rasa chatbot model:
-
-```bash
-rasa train
-```
-
-### 5. Access Frontend
-
-Open your browser and go to:
-
-```
-http://localhost:3000
-```
-
-### 6. Test Chatbot
-
-Send a POST request to the API:
-
-```bash
-curl http://localhost:8000/query -X POST -H "Content-Type: application/json" -d '{"text": "Hello"}'
-```
-
-## Troubleshooting
-
-- If API returns connection errors to Rasa, ensure Rasa container is running and accessible.
-- Check logs for API and Rasa:
-
-```bash
-docker-compose logs api
-```
-
-```bash
-docker-compose logs rasa
-```
-
-## Development
-
-- Backend API code is in `src/api/`
-- Frontend React app is in `src/frontend/`
-- Knowledge graph logic is in `src/knowledge_graph/`
-- NLP utilities are in `src/nlp/`
-
-## .gitignore
-
-The project includes a comprehensive `.gitignore` covering Python, Docker, Node, Neo4j, and IDE files.
+A full-stack project with Rasa chatbot, FastAPI backend, React frontend, and Neo4j knowledge graph.
 
 ---
 
-Feel free to ask if you need help with specific parts of the project or further customization.
+## 🚀 Quick Start
+
+### 1. **Clone the repository**
+
+```sh
+git clone https://github.com/yourusername/BAH-Project.git
+cd BAH-Project
+```
+
+### 2. **Set up Python environment**
+
+```sh
+python3.9 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+### 3. **Install Node.js dependencies for the frontend**
+
+```sh
+cd src/frontend
+npm install
+cd ../../
+```
+
+### 4. **Start Neo4j**
+
+- **Neo4j Desktop:** Open and start your database.
+- **Or Homebrew:**
+  ```sh
+  brew install neo4j
+  neo4j start
+  ```
+- **Or Docker:**
+  ```sh
+  docker run -d --name neo4j -p7474:7474 -p7687:7687 -e NEO4J_AUTH=neo4j/password neo4j:5
+  ```
+
+### 5. **Train the Rasa model**
+
+```sh
+cd src/chatbot
+rasa train
+cd ../../
+```
+
+### 6. **Run all services (development)**
+
+Open three terminals:
+
+**Terminal 1: Rasa**
+
+```sh
+cd src/chatbot
+rasa run --enable-api
+```
+
+**Terminal 2: FastAPI**
+
+```sh
+cd src/api
+uvicorn main:app --reload
+```
+
+**Terminal 3: React frontend**
+
+```sh
+cd src/frontend
+npm start
+```
+
+---
+
+## 🐳 Docker (All-in-one)
+
+If you prefer Docker:
+
+```sh
+docker buildx build --platform linux/amd64 -t bah-project .
+docker-compose up
+```
+
+---
+
+## 📂 Project Structure
+
+```
+BAH-Project/
+│
+├── src/
+│   ├── api/         # FastAPI backend
+│   ├── chatbot/     # Rasa chatbot
+│   └── frontend/    # React frontend
+│
+├── data/            # Neo4j data (gitignored)
+├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+└── .gitignore
+```
+
+---
+
+## 📝 Notes
+
+- All build, cache, and environment files are gitignored for easy setup.
+- Update Neo4j credentials in your backend if you change the default password.
+- For production, build the React app (`npm run build`) and serve with a static server.
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome!
+
+---
+
+## 📄 License
+
+[MIT](LICENSE)
